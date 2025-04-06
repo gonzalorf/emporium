@@ -1,5 +1,6 @@
 ﻿using Emporium.Domain.Products.Events;
 using Emporium.Domain.Products.Validators;
+using Emporium.Domain.Providers;
 using Emporium.Domain.SeedWork;
 
 namespace Emporium.Domain.Products;
@@ -13,6 +14,7 @@ public class Product : AuditableEntity<ProductId>, IAggregateRoot
     public decimal StrikethroughPrice { get; private set; }
     public bool UsesVariantPricingAndStock { get; private set; }
     public bool Published { get; private set; }
+    public ProviderId? ProviderId { get; private set; }
 
     private readonly List<string> tags = new();
     public IReadOnlyCollection<string> Tags => tags.AsReadOnly();
@@ -22,22 +24,22 @@ public class Product : AuditableEntity<ProductId>, IAggregateRoot
 
     private Product() : base() { }
 
-    private Product(ProductId id, string name, string brand, string description, ProductType productType, decimal price, decimal strikethroughPrice, bool usesVariantPricingAndStock, bool published, string[] tags) : base(id)
+    private Product(ProductId id, string name, string brand, string description, ProductType productType, decimal price, decimal strikethroughPrice, bool usesVariantPricingAndStock, bool published, ProviderId? providerId, string[] tags) : base(id)
     {
         Name = name;
         Brand = brand;
         Description = description;
         Price = price;
         StrikethroughPrice = strikethroughPrice;
-        this.tags = new(tags);
         ProductType = productType;
         UsesVariantPricingAndStock = usesVariantPricingAndStock;
         Published = published;
+        ProviderId = providerId;
     }
 
-    public static Product CreateProduct(string name, string brand, string description, ProductType productType, decimal price, decimal strikethroughPrice, bool usesVariantPricingAndStock, bool published, string[] tags)
+    public static Product CreateProduct(string name, string brand, string description, ProductType productType, decimal price, decimal strikethroughPrice, bool usesVariantPricingAndStock, bool published, ProviderId? providerId, string[] tags)
     {
-        var product = new Product(new ProductId(Guid.NewGuid()), name, brand, description, productType, price, strikethroughPrice, usesVariantPricingAndStock, published, tags);
+        var product = new Product(new ProductId(Guid.NewGuid()), name, brand, description, productType, price, strikethroughPrice, usesVariantPricingAndStock, published, providerId, tags);
 
         ProductValidator.ValidateProduct(product);
         product.AddDomainEvent(new ProductCreatedEvent(product.Id));
@@ -45,21 +47,44 @@ public class Product : AuditableEntity<ProductId>, IAggregateRoot
         return product;
     }
 
-    public void UpdateProperties(string name, string brand, string description, ProductType productType, decimal price, decimal strikethroughPrice, bool usesVariantPricingAndStock, bool published, string[] tags)
+    public void SetProvider(ProviderId? providerId)
+    {
+        ProviderId = providerId;
+
+        ProductValidator.ValidateProduct(this);
+    }
+
+    public void UpdateMainProperties(string name, string brand, string description)
     {
         Name = name;
         Brand = brand;
         Description = description;
-        ProductType = productType;
-        Price = price;
-        StrikethroughPrice = strikethroughPrice;
-        UsesVariantPricingAndStock = usesVariantPricingAndStock;
-        this.tags.Clear();
-        this.tags.AddRange(tags);
-        Published = published;
 
         ProductValidator.ValidateProduct(this);
     }
+
+    public void UpdatePrices(decimal price, decimal strikethroughPrice)
+    {
+        Price = price;
+        StrikethroughPrice = strikethroughPrice;
+
+        ProductValidator.ValidateProduct(this);
+    }
+
+    public void UpdateProductType(ProductType productType)
+    {
+        ProductType = productType;
+
+        ProductValidator.ValidateProduct(this);
+    }
+
+    public void SetUsesVariantPricingAndStock(bool usesVariantPricingAndStock)
+    {
+        UsesVariantPricingAndStock = usesVariantPricingAndStock;
+
+        ProductValidator.ValidateProduct(this);
+    }
+
 
     public void SetPublished(bool published)
     {
@@ -69,7 +94,7 @@ public class Product : AuditableEntity<ProductId>, IAggregateRoot
     public ProductVariant AddProductVariant(ProductVariant productVariant)
     {
         productVariants.Add(productVariant);
-        AddDomainEvent(new ProductVariantAddedEvent(Id, productVariant.Id));
+        AddDomainEvent(new ProductVariantAddedEvent(Id, productVariant.VariantValueId));
 
         return productVariant;
     }
@@ -77,5 +102,6 @@ public class Product : AuditableEntity<ProductId>, IAggregateRoot
     public void RemoveProductVariant(ProductVariant productVariant)
     {
         productVariants.Remove(productVariant);
+        AddDomainEvent(new ProductVariantRemovedEvent(Id, productVariant.VariantValueId));
     }
 }

@@ -8,4 +8,6 @@ public interface IProductRepository
     void Update(Product product);
     Task<Product?> GetById(ProductId id);
     Task<IEnumerable<Product>> GetAll();
+
+    Task<ProductType> GetProductTypeById(ProductTypeId id);
 }
