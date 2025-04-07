@@ -10,4 +10,10 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Emporium.Application\Emporium.Application.csproj" />
+    <ProjectReference Include="..\Emporium.Domain\Emporium.Domain.csproj" />
+    <ProjectReference Include="..\Emporium.Infrastructure\Emporium.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

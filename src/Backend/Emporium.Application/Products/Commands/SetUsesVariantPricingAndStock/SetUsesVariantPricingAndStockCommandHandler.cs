@@ -12,12 +12,14 @@ internal class SetUsesVariantPricingAndStockCommandHandler : ICommandHandler<Set
         this.productRepository = productRepository;
     }
 
-    public async Task Handle(SetUsesVariantPricingAndStockCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Mediator.Unit> Handle(SetUsesVariantPricingAndStockCommand request, CancellationToken cancellationToken)
     {
         var product = await productRepository.GetById(request.ProductId) ?? throw new ProductNotFoundException(request.ProductId);
         
         product.SetUsesVariantPricingAndStock(request.UsesVariantPricingAndStock);
 
         productRepository.Update(product);
+
+        return Mediator.Unit.Value;
     }
 }

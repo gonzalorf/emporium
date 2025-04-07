@@ -12,7 +12,7 @@ internal class RemoveProductCommandHandler : ICommandHandler<RemoveProductComman
         this.productRepository = productRepository;
     }
 
-    public async Task Handle(RemoveProductCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Mediator.Unit> Handle(RemoveProductCommand request, CancellationToken cancellationToken)
     {
         var product = await productRepository.GetById(request.ProductId);
 
@@ -22,5 +22,7 @@ internal class RemoveProductCommandHandler : ICommandHandler<RemoveProductComman
         }
 
         productRepository.Remove(product);
+
+        return Mediator.Unit.Value;
     }
 }

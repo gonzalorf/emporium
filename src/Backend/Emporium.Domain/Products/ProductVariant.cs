@@ -2,24 +2,25 @@ using Emporium.Domain.SeedWork;
 using Emporium.Domain.Variants;
 
 namespace Emporium.Domain.Products;
-public class ProductVariant : ValueObject
+public class ProductVariant : Entity<ProductVariantId>
 {
-    public VariantValueId VariantValueId { get; private set; }
+    private readonly List<VariantValueId> variantValueIds = new();
+    public IReadOnlyCollection<VariantValueId> VariantValueIds => variantValueIds.AsReadOnly();
     public decimal Price { get; private set; }
     public decimal StrikethroughPrice { get; private set; }
 
     private ProductVariant() : base() { }
 
-    private ProductVariant(VariantValueId variantValueId, decimal price, decimal strikethroughPrice)
+    private ProductVariant(List<VariantValueId> variantValueIds, decimal price, decimal strikethroughPrice)
     {
-        VariantValueId = variantValueId;
+        this.variantValueIds = variantValueIds;
         Price = price;
         StrikethroughPrice = strikethroughPrice;
     }
 
-    public static ProductVariant CreateProductVariant(VariantValueId variantValueId, decimal price, decimal strikethroughPrice)
+    public static ProductVariant CreateProductVariant(List<VariantValueId> variantValueIds, decimal price, decimal strikethroughPrice)
     {
-        return new ProductVariant(variantValueId, price, strikethroughPrice);
+        return new ProductVariant(variantValueIds, price, strikethroughPrice);
     }
 
     public void UpdatePrices(decimal price, decimal strikethroughPrice)

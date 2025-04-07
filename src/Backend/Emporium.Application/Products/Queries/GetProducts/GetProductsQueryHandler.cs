@@ -15,7 +15,7 @@ internal class GetProductsQueryHandler : IQueryHandler<GetProductsQuery, IEnumer
         this.mapper = mapper;
     }
 
-    public async Task<IEnumerable<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    public async ValueTask<IEnumerable<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
         return mapper.Map<IEnumerable<ProductDto>>(await productRepository.GetAll());
     }

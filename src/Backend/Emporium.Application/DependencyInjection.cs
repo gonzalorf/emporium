@@ -4,14 +4,13 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Emporium.Application;
 public static class DependencyInjection
 {
+    // https://github.com/martinothamar/Mediator
+
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         var assembly = typeof(DependencyInjection).Assembly;
 
-        _ = services.AddMediatR(configuration =>
-        {
-            _ = configuration.RegisterServicesFromAssemblies(assembly);
-        });
+        _ = services.AddMediator();
 
         _ = services.AddValidatorsFromAssembly(assembly);
 

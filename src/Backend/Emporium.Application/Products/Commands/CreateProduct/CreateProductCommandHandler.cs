@@ -13,7 +13,7 @@ internal class CreateProductCommandHandler : ICommandHandler<CreateProductComman
         this.productRepository = productRepository;
     }
 
-    public async Task<ProductId> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async ValueTask<ProductId> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         var productType = await productRepository.GetProductTypeById(new ProductTypeId(request.ProductTypeId));
 

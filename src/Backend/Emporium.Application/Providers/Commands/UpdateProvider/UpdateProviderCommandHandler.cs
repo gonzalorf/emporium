@@ -12,12 +12,14 @@ internal class UpdateProviderCommandHandler : ICommandHandler<UpdateProviderComm
         this.providerRepository = providerRepository;
     }
 
-    public async Task Handle(UpdateProviderCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Mediator.Unit> Handle(UpdateProviderCommand request, CancellationToken cancellationToken)
     {
         var provider = await providerRepository.GetById(request.ProviderId) ?? throw new ProviderNotFoundException(request.ProviderId);
 
         provider.Update(request.Name, request.BankAccountNumber, request.BankAccountAlias);
 
         providerRepository.Update(provider);
+
+        return Mediator.Unit.Value;
     }
 }
