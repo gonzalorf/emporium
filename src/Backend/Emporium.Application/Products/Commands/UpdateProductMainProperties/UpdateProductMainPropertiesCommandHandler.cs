@@ -12,7 +12,7 @@ internal class UpdateProductMainPropertiesCommandHandler : ICommandHandler<Updat
         this.productRepository = productRepository;
     }
 
-    public async Task Handle(UpdateProductMainPropertiesCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Mediator.Unit> Handle(UpdateProductMainPropertiesCommand request, CancellationToken cancellationToken)
     {
         var product = await productRepository.GetById(request.ProductId) ?? throw new ProductNotFoundException(request.ProductId);
         
@@ -21,5 +21,7 @@ internal class UpdateProductMainPropertiesCommandHandler : ICommandHandler<Updat
                                  request.Description);
 
         productRepository.Update(product);
+
+        return Mediator.Unit.Value;
     }
 }

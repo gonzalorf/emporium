@@ -12,7 +12,7 @@ internal class GetProvidersQueryHandler : IQueryHandler<GetProvidersQuery, IEnum
         this.providerRepository = providerRepository;
     }
 
-    public async Task<IEnumerable<Provider>> Handle(GetProvidersQuery request, CancellationToken cancellationToken)
+    public async ValueTask<IEnumerable<Provider>> Handle(GetProvidersQuery request, CancellationToken cancellationToken)
     {
         return await providerRepository.GetAll();
     }

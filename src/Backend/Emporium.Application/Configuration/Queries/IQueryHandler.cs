@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Mediator;
 
 namespace Emporium.Application.Configuration.Queries;
 public interface IQueryHandler<in TQuery, TResult> :

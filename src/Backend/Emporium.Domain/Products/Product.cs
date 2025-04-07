@@ -2,6 +2,7 @@
 using Emporium.Domain.Products.Validators;
 using Emporium.Domain.Providers;
 using Emporium.Domain.SeedWork;
+using Emporium.Domain.Variants;
 
 namespace Emporium.Domain.Products;
 public class Product : AuditableEntity<ProductId>, IAggregateRoot
@@ -18,6 +19,9 @@ public class Product : AuditableEntity<ProductId>, IAggregateRoot
 
     private readonly List<string> tags = new();
     public IReadOnlyCollection<string> Tags => tags.AsReadOnly();
+    
+    private readonly List<Variant> assignedVariants = new();
+    public IReadOnlyCollection<Variant> AssignedVariants => assignedVariants.AsReadOnly();
 
     private readonly List<ProductVariant> productVariants = new();
     public IReadOnlyCollection<ProductVariant> ProductVariants => productVariants.AsReadOnly();
@@ -91,10 +95,29 @@ public class Product : AuditableEntity<ProductId>, IAggregateRoot
         Published = published;
     }
 
+    public void AddAssignedVariant(Variant variant)
+    {
+        if (variant == null) throw new ArgumentNullException(nameof(variant));
+        if (!assignedVariants.Contains(variant))
+        {
+            assignedVariants.Add(variant);
+            AddDomainEvent(new AssignedVariantAddedEvent(Id, variant.Id));
+        }
+    }
+
+    public void RemoveAssignedVariant(Variant variant)
+    {
+        if (variant == null) throw new ArgumentNullException(nameof(variant));
+        if (assignedVariants.Remove(variant))
+        {
+            AddDomainEvent(new AssignedVariantRemovedEvent(Id, variant.Id));
+        }
+    }
+
     public ProductVariant AddProductVariant(ProductVariant productVariant)
     {
         productVariants.Add(productVariant);
-        AddDomainEvent(new ProductVariantAddedEvent(Id, productVariant.VariantValueId));
+        AddDomainEvent(new ProductVariantAddedEvent(Id, productVariant.Id));
 
         return productVariant;
     }
@@ -102,6 +125,6 @@ public class Product : AuditableEntity<ProductId>, IAggregateRoot
     public void RemoveProductVariant(ProductVariant productVariant)
     {
         productVariants.Remove(productVariant);
-        AddDomainEvent(new ProductVariantRemovedEvent(Id, productVariant.VariantValueId));
+        AddDomainEvent(new ProductVariantRemovedEvent(Id, productVariant.Id));
     }
 }

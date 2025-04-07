@@ -12,12 +12,14 @@ internal class SetPublishedCommandHandler : ICommandHandler<SetPublishedCommand>
         this.productRepository = productRepository;
     }
 
-    public async Task Handle(SetPublishedCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Mediator.Unit> Handle(SetPublishedCommand request, CancellationToken cancellationToken)
     {
         var product = await productRepository.GetById(request.ProductId) ?? throw new ProductNotFoundException(request.ProductId);
         
         product.SetPublished(request.Published);
 
         productRepository.Update(product);
+
+        return Mediator.Unit.Value;
     }
 }

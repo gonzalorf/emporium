@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Emporium.Application\Emporium.Application.csproj" />
+    <ProjectReference Include="..\Emporium.Domain\Emporium.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

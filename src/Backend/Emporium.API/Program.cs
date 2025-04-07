@@ -30,6 +30,8 @@ public class Program
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
+        // VER https://github.com/reactiveui/refit
+
         app.MapGet("/weatherforecast", (HttpContext httpContext) =>
         {
             var forecast = Enumerable.Range(1, 5).Select(index =>
