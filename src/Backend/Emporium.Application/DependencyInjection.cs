@@ -15,7 +15,7 @@ public static class DependencyInjection
 
         _ = services.AddValidatorsFromAssembly(assembly);
 
-        _ = services.AddMapster();
+        services.AddMapster();
 
         return services;
     }
