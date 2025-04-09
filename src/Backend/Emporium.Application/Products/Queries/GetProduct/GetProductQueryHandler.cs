@@ -2,7 +2,7 @@
 using Emporium.Domain.Products.Exceptions;
 using Emporium.Domain.Products;
 using Emporium.Application.Products.Dtos;
-using AutoMapper;
+using MapsterMapper;
 
 namespace Emporium.Application.Products.Queries.GetProduct;
 internal class GetProductQueryHandler : IQueryHandler<GetProductQuery, ProductDto>

@@ -5,7 +5,7 @@
 /// </summary>
 public abstract class Entity<TIdType> : IEntity where TIdType : TypedIdValueBase
 {
-    public TIdType Id { get; protected set; }
+    public TIdType Id { get; protected set; } = default!;
     public TenantId TenantId { get; set; } = new(Guid.Empty);
     public bool Deleted { get; set; }
 
