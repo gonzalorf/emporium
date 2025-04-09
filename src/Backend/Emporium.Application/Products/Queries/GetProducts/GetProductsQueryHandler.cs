@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using Emporium.Application.Configuration.Queries;
+﻿using Emporium.Application.Configuration.Queries;
 using Emporium.Application.Products.Dtos;
 using Emporium.Domain.Products;
+using MapsterMapper;
 
 namespace Emporium.Application.Products.Queries.GetProducts;
 internal class GetProductsQueryHandler : IQueryHandler<GetProductsQuery, IEnumerable<ProductDto>>

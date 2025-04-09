@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Mapster;
 
 namespace Emporium.Application;
 public static class DependencyInjection
@@ -14,7 +15,7 @@ public static class DependencyInjection
 
         _ = services.AddValidatorsFromAssembly(assembly);
 
-        _ = services.AddAutoMapper(typeof(MappingProfile));
+        _ = services.AddMapster();
 
         return services;
     }

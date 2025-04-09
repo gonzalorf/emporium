@@ -7,9 +7,9 @@ public class Order : Entity<OrderId>
     public IReadOnlyCollection<OrderItem> OrderItems => orderItems.AsReadOnly();
     public DateTime Date { get; private set; }
     public decimal TotalAmount { get; private set; }
-    public string Customer { get; private set; }
-    public string CustomerEmail { get; private set; }
-    public string CustomerTaxId { get; private set; }
+    public string Customer { get; private set; } = string.Empty;
+    public string CustomerEmail { get; private set; } = string.Empty;
+    public string CustomerTaxId { get; private set; } = string.Empty;
 
     private Order() : base() { }
 
