@@ -1,5 +1,3 @@
-using Emporium.Domain.SeedWork;
-
 namespace Emporium.Domain.Variants;
 public class Variant : Entity<VariantId>
 {

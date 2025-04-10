@@ -1,7 +1,6 @@
 ﻿using Emporium.Domain.Products.Events;
 using Emporium.Domain.Products.Validators;
 using Emporium.Domain.Providers;
-using Emporium.Domain.SeedWork;
 using Emporium.Domain.Variants;
 
 namespace Emporium.Domain.Products;

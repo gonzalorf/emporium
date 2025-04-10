@@ -1,6 +1,4 @@
-﻿using Emporium.Domain.Providers;
-
-namespace Emporium.Domain.Products;
+﻿namespace Emporium.Domain.Products;
 public interface IProductRepository
 {
     Task Add(Product product);

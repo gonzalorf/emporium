@@ -1,7 +1,5 @@
 ﻿using Emporium.Domain.Products;
-using Emporium.Domain.SeedWork;
 using Emporium.Domain.Stocks.Validators;
-using Emporium.Domain.Variants;
 
 namespace Emporium.Domain.Stocks;
 public class Stock : AuditableEntity<StockId>, IAggregateRoot
