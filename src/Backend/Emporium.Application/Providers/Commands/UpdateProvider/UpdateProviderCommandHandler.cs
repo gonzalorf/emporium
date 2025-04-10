@@ -1,9 +1,10 @@
-﻿using Emporium.Application.Configuration.Commands;
+﻿using Emporium.Application.Common;
+using Emporium.Application.Configuration.Commands;
 using Emporium.Domain.Providers;
 using Emporium.Domain.Providers.Exceptions;
 
 namespace Emporium.Application.Providers.Commands.UpdateProvider;
-internal class UpdateProviderCommandHandler : ICommandHandler<UpdateProviderCommand>
+internal class UpdateProviderCommandHandler : ICommandHandler<UpdateProviderCommand, Result>
 {
     private readonly IProviderRepository providerRepository;
 
@@ -12,14 +13,18 @@ internal class UpdateProviderCommandHandler : ICommandHandler<UpdateProviderComm
         this.providerRepository = providerRepository;
     }
 
-    public async ValueTask<Mediator.Unit> Handle(UpdateProviderCommand request, CancellationToken cancellationToken)
+public async ValueTask<Result> Handle(UpdateProviderCommand request, CancellationToken cancellationToken)
+{
+    var provider = await providerRepository.GetById(new ProviderId(request.ProviderId));
+    if (provider == null)
     {
-        var provider = await providerRepository.GetById(request.ProviderId) ?? throw new ProviderNotFoundException(request.ProviderId);
-
-        provider.Update(request.Name, request.BankAccountNumber, request.BankAccountAlias);
-
-        providerRepository.Update(provider);
-
-        return Mediator.Unit.Value;
+        return Result.Failure(new Error($"Provider with ID {request.ProviderId} not found."));
     }
+
+    provider.Update(request.Name, request.BankAccountNumber, request.BankAccountAlias);
+
+    providerRepository.Update(provider);
+
+    return Result.Success();
+}
 }

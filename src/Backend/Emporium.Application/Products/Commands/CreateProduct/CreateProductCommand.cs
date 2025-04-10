@@ -1,4 +1,5 @@
-﻿using Emporium.Application.Configuration.Commands;
+﻿using Emporium.Application.Common;
+using Emporium.Application.Configuration.Commands;
 using Emporium.Domain.Products;
 
 namespace Emporium.Application.Products.Commands.CreateProduct;
@@ -13,4 +14,4 @@ public record CreateProductCommand(
         bool Published,
         Guid ProviderId,
         string[] Tags
-    ) : CommandBase<ProductId>;
+    ) : CommandBase<Result<ProductId>>;

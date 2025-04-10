@@ -1,9 +1,10 @@
 ﻿using Emporium.Application.Configuration.Commands;
 using Emporium.Domain.Products.Exceptions;
 using Emporium.Domain.Products;
+using Emporium.Application.Common;
 
 namespace Emporium.Application.Products.Commands.UpdateProductMainProperties;
-internal class UpdateProductMainPropertiesCommandHandler : ICommandHandler<UpdateProductMainPropertiesCommand>
+internal class UpdateProductMainPropertiesCommandHandler : ICommandHandler<UpdateProductMainPropertiesCommand, Result>
 {
     private readonly IProductRepository productRepository;
 
@@ -12,16 +13,22 @@ internal class UpdateProductMainPropertiesCommandHandler : ICommandHandler<Updat
         this.productRepository = productRepository;
     }
 
-    public async ValueTask<Mediator.Unit> Handle(UpdateProductMainPropertiesCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Result> Handle(UpdateProductMainPropertiesCommand request, CancellationToken cancellationToken)
     {
-        var product = await productRepository.GetById(request.ProductId) ?? throw new ProductNotFoundException(request.ProductId);
-        
-        product.UpdateMainProperties(request.Name,
-                                 request.Brand,
-                                 request.Description);
+        var product = await productRepository.GetById(new ProductId(request.ProductId));
+        if (product == null)
+        {
+            return Result.Failure(new Error($"Product with ID {request.ProductId} not found."));
+        }
+
+        product.UpdateMainProperties(
+            request.Name,
+            request.Brand,
+            request.Description
+        );
 
         productRepository.Update(product);
 
-        return Mediator.Unit.Value;
+        return Result.Success();
     }
 }

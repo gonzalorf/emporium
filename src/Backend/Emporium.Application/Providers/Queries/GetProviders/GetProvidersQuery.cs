@@ -1,6 +1,7 @@
-﻿using Emporium.Application.Configuration.Queries;
+﻿using Emporium.Application.Common;
+using Emporium.Application.Configuration.Queries;
 using Emporium.Domain.Providers;
 
 namespace Emporium.Application.Providers.Queries.GetProviders;
 
-public record GetProvidersQuery() : IQuery<IEnumerable<Provider>>;
+public record GetProvidersQuery() : IQuery<Result<IEnumerable<Provider>>>;

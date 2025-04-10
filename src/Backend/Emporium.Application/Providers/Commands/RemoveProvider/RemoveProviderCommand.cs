@@ -1,9 +1,9 @@
-﻿using Emporium.Application.Configuration.Commands;
-using Emporium.Domain.Providers;
+﻿using Emporium.Application.Common;
+using Emporium.Application.Configuration.Commands;
 
 namespace Emporium.Application.Providers.Commands.RemoveProvider;
 
 public record RemoveProviderCommand
 (
-    ProviderId ProviderId
-) : CommandBase;
+    Guid ProviderId
+) : CommandBase<Result>;

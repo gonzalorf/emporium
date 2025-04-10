@@ -1,9 +1,9 @@
+using Emporium.Application.Common;
 using Emporium.Application.Configuration.Commands;
-using Emporium.Domain.Products;
 
 namespace Emporium.Application.Products.Commands.SetUsesVariantPricingAndStock;
 
 public record SetUsesVariantPricingAndStockCommand(
-        ProductId ProductId,
+        Guid ProductId,
         bool UsesVariantPricingAndStock
-    ) : CommandBase;
+    ) : CommandBase<Result>;

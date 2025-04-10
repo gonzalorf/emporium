@@ -1,8 +1,9 @@
-﻿using Emporium.Application.Configuration.Queries;
+﻿using Emporium.Application.Common;
+using Emporium.Application.Configuration.Queries;
 using Emporium.Domain.Providers;
 
 namespace Emporium.Application.Providers.Queries.GetProviders;
-internal class GetProvidersQueryHandler : IQueryHandler<GetProvidersQuery, IEnumerable<Provider>>
+internal class GetProvidersQueryHandler : IQueryHandler<GetProvidersQuery, Result<IEnumerable<Provider>>>
 {
     private readonly IProviderRepository providerRepository;
 
@@ -11,8 +12,15 @@ internal class GetProvidersQueryHandler : IQueryHandler<GetProvidersQuery, IEnum
         this.providerRepository = providerRepository;
     }
 
-    public async ValueTask<IEnumerable<Provider>> Handle(GetProvidersQuery request, CancellationToken cancellationToken)
+    public async ValueTask<Result<IEnumerable<Provider>>> Handle(GetProvidersQuery request, CancellationToken cancellationToken)
     {
-        return await providerRepository.GetAll();
+        var providers = await providerRepository.GetAll();
+
+        if (providers == null || !providers.Any())
+        {
+            return Result.Failure<IEnumerable<Provider>>(new Error("No providers found."));
+        }
+
+        return Result.Success(providers);
     }
 }
