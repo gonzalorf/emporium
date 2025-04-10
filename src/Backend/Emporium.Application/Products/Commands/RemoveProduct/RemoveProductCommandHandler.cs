@@ -1,7 +1,4 @@
-﻿using Emporium.Application.Configuration.Commands;
-using Emporium.Domain.Products.Exceptions;
-using Emporium.Domain.Products;
-using Emporium.Application.Common;
+﻿using Emporium.Domain.Products;
 
 namespace Emporium.Application.Products.Commands.RemoveProduct;
 internal class RemoveProductCommandHandler : ICommandHandler<RemoveProductCommand, Result>

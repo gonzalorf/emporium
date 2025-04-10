@@ -1,8 +1,6 @@
-﻿using Emporium.Application.Configuration.Commands;
-using Emporium.Domain.Products.Events;
+﻿using Emporium.Domain.Products.Events;
 using Emporium.Domain.Products;
 using Emporium.Domain.Providers;
-using Emporium.Application.Common;
 
 namespace Emporium.Application.Products.Commands.CreateProduct;
 internal class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, Result<ProductId>>

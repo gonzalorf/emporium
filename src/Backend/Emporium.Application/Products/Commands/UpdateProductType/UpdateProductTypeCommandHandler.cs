@@ -1,6 +1,4 @@
-using Emporium.Application.Configuration.Commands;
 using Emporium.Domain.Products;
-using Emporium.Application.Common;
 
 namespace Emporium.Application.Products.Commands.UpdateProductType;
 internal class UpdateProductTypeCommandHandler : ICommandHandler<UpdateProductTypeCommand, Result>
