@@ -1,9 +1,9 @@
+using Emporium.Application.Common;
 using Emporium.Application.Configuration.Commands;
-using Emporium.Domain.Products;
 
 namespace Emporium.Application.Products.Commands.SetPublished;
 
 public record SetPublishedCommand(
-        ProductId ProductId,
+        Guid ProductId,
         bool Published
-    ) : CommandBase;
+    ) : CommandBase<Result>;

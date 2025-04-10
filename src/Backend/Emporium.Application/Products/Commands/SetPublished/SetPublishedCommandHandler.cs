@@ -1,9 +1,10 @@
 using Emporium.Application.Configuration.Commands;
 using Emporium.Domain.Products.Exceptions;
 using Emporium.Domain.Products;
+using Emporium.Application.Common;
 
 namespace Emporium.Application.Products.Commands.SetPublished;
-internal class SetPublishedCommandHandler : ICommandHandler<SetPublishedCommand>
+internal class SetPublishedCommandHandler : ICommandHandler<SetPublishedCommand, Result>
 {
     private readonly IProductRepository productRepository;
 
@@ -12,14 +13,18 @@ internal class SetPublishedCommandHandler : ICommandHandler<SetPublishedCommand>
         this.productRepository = productRepository;
     }
 
-    public async ValueTask<Mediator.Unit> Handle(SetPublishedCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Result> Handle(SetPublishedCommand request, CancellationToken cancellationToken)
     {
-        var product = await productRepository.GetById(request.ProductId) ?? throw new ProductNotFoundException(request.ProductId);
-        
+        var product = await productRepository.GetById(new ProductId(request.ProductId));
+        if (product == null)
+        {
+            return Result.Failure(new Error($"Product with ID {request.ProductId} not found."));
+        }
+
         product.SetPublished(request.Published);
 
         productRepository.Update(product);
 
-        return Mediator.Unit.Value;
+        return Result.Success();
     }
 }

@@ -1,4 +1,5 @@
 
+using Emporium.Application.Common;
 using Emporium.Application.Configuration.Commands;
 using Emporium.Domain.Providers;
 
@@ -8,4 +9,4 @@ public record CreateProviderCommand(
     string Name,
     string BankAccountNumber,
     string BankAccountAlias
-) : CommandBase<ProviderId>;
+) : CommandBase<Result<ProviderId>>;

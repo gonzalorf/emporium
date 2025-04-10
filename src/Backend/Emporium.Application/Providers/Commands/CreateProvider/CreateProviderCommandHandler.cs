@@ -1,8 +1,9 @@
-﻿using Emporium.Application.Configuration.Commands;
+﻿using Emporium.Application.Common;
+using Emporium.Application.Configuration.Commands;
 using Emporium.Domain.Providers;
 
 namespace Emporium.Application.Providers.Commands.CreateProvider;
-internal class CreateProviderCommandHandler : ICommandHandler<CreateProviderCommand, ProviderId>
+internal class CreateProviderCommandHandler : ICommandHandler<CreateProviderCommand, Result<ProviderId>>
 {
     private readonly IProviderRepository providerRepository;
 
@@ -11,15 +12,16 @@ internal class CreateProviderCommandHandler : ICommandHandler<CreateProviderComm
         this.providerRepository = providerRepository;
     }
 
-    public async ValueTask<ProviderId> Handle(CreateProviderCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Result<ProviderId>> Handle(CreateProviderCommand request, CancellationToken cancellationToken)
     {
         var provider = Provider.CreateProvider(
-            request.Name
-            , request.BankAccountNumber
-            , request.BankAccountAlias
-            );
+            request.Name,
+            request.BankAccountNumber,
+            request.BankAccountAlias
+        );
+
         await providerRepository.Add(provider);
 
-        return provider.Id;
+        return Result.Success(provider.Id);
     }
 }

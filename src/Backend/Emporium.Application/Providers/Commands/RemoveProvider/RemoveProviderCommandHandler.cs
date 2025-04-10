@@ -1,9 +1,10 @@
-﻿using Emporium.Application.Configuration.Commands;
+﻿using Emporium.Application.Common;
+using Emporium.Application.Configuration.Commands;
 using Emporium.Domain.Providers;
 using Emporium.Domain.Providers.Exceptions;
 
 namespace Emporium.Application.Providers.Commands.RemoveProvider;
-internal class RemoveProviderCommandHandler : ICommandHandler<RemoveProviderCommand>
+internal class RemoveProviderCommandHandler : ICommandHandler<RemoveProviderCommand, Result>
 {
     private readonly IProviderRepository providerRepository;
 
@@ -12,12 +13,16 @@ internal class RemoveProviderCommandHandler : ICommandHandler<RemoveProviderComm
         providerRepository = ProviderRepository;
     }
 
-    public async ValueTask<Mediator.Unit> Handle(RemoveProviderCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Result> Handle(RemoveProviderCommand request, CancellationToken cancellationToken)
     {
-        var Provider = await providerRepository.GetById(request.ProviderId) ?? throw new ProviderNotFoundException(request.ProviderId);
+        var provider = await providerRepository.GetById(new ProviderId(request.ProviderId));
+        if (provider == null)
+        {
+            return Result.Failure(new Error($"Provider with ID {request.ProviderId} not found."));
+        }
 
-        providerRepository.Remove(Provider);
+        providerRepository.Remove(provider);
 
-        return Mediator.Unit.Value;
+        return Result.Success();
     }
 }

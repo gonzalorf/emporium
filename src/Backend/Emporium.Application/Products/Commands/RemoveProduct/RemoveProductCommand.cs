@@ -1,9 +1,9 @@
-﻿using Emporium.Application.Configuration.Commands;
-using Emporium.Domain.Products;
+﻿using Emporium.Application.Common;
+using Emporium.Application.Configuration.Commands;
 
 namespace Emporium.Application.Products.Commands.RemoveProduct;
 
 public record RemoveProductCommand
 (
-    ProductId ProductId
-) : CommandBase;
+    Guid ProductId
+) : CommandBase<Result>;

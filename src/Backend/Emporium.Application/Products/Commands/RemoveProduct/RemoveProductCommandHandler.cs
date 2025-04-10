@@ -1,9 +1,10 @@
 ﻿using Emporium.Application.Configuration.Commands;
 using Emporium.Domain.Products.Exceptions;
 using Emporium.Domain.Products;
+using Emporium.Application.Common;
 
 namespace Emporium.Application.Products.Commands.RemoveProduct;
-internal class RemoveProductCommandHandler : ICommandHandler<RemoveProductCommand>
+internal class RemoveProductCommandHandler : ICommandHandler<RemoveProductCommand, Result>
 {
     private readonly IProductRepository productRepository;
 
@@ -12,17 +13,17 @@ internal class RemoveProductCommandHandler : ICommandHandler<RemoveProductComman
         this.productRepository = productRepository;
     }
 
-    public async ValueTask<Mediator.Unit> Handle(RemoveProductCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Result> Handle(RemoveProductCommand request, CancellationToken cancellationToken)
+{
+    var product = await productRepository.GetById(new ProductId(request.ProductId));
+
+    if (product == null)
     {
-        var product = await productRepository.GetById(request.ProductId);
-
-        if (product == null)
-        {
-            throw new ProductNotFoundException(request.ProductId);
-        }
-
-        productRepository.Remove(product);
-
-        return Mediator.Unit.Value;
+        return Result.Failure(new Error($"Product with ID {request.ProductId} not found."));
     }
+
+    productRepository.Remove(product);
+
+    return Result.Success();
+}
 }

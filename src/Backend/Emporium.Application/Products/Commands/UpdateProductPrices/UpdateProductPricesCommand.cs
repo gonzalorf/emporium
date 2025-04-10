@@ -1,10 +1,11 @@
+using Emporium.Application.Common;
 using Emporium.Application.Configuration.Commands;
 using Emporium.Domain.Products;
 
 namespace Emporium.Application.Products.Commands.UpdateProductPrices;
 
 public record UpdateProductPricesCommand(
-        ProductId ProductId,
+        Guid ProductId,
         decimal Price,
         decimal StrikethroughPrice
-    ) : CommandBase;
+    ) : CommandBase<Result>;

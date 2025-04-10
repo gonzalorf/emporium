@@ -1,11 +1,11 @@
-﻿using Emporium.Application.Configuration.Commands;
-using Emporium.Domain.Providers;
+﻿using Emporium.Application.Common;
+using Emporium.Application.Configuration.Commands;
 
 namespace Emporium.Application.Providers.Commands.UpdateProvider;
 
 public record UpdateProviderCommand(
-        ProviderId ProviderId,
+        Guid ProviderId,
         string Name,
         string BankAccountNumber,
         string BankAccountAlias
-    ) : CommandBase;
+    ) : CommandBase<Result>;
