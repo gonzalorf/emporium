@@ -1,7 +1,4 @@
-using Emporium.Application.Configuration.Commands;
-using Emporium.Domain.Products.Exceptions;
 using Emporium.Domain.Products;
-using Emporium.Application.Common;
 
 namespace Emporium.Application.Products.Commands.SetPublished;
 internal class SetPublishedCommandHandler : ICommandHandler<SetPublishedCommand, Result>

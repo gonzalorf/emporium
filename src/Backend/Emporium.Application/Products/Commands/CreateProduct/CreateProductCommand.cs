@@ -1,6 +1,4 @@
-﻿using Emporium.Application.Common;
-using Emporium.Application.Configuration.Commands;
-using Emporium.Domain.Products;
+﻿using Emporium.Domain.Products;
 
 namespace Emporium.Application.Products.Commands.CreateProduct;
 public record CreateProductCommand(
