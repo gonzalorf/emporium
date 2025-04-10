@@ -1,4 +1,3 @@
-using Emporium.Domain.SeedWork;
 using Emporium.Domain.Products;
 
 namespace Emporium.Domain.CartItems;

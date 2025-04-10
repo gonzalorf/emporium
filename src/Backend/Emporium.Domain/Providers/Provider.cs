@@ -1,5 +1,4 @@
 ﻿using Emporium.Domain.Providers.Validators;
-using Emporium.Domain.SeedWork;
 
 namespace Emporium.Domain.Providers;
 

@@ -1,6 +1,4 @@
-﻿using Emporium.Domain.SeedWork;
-
-namespace Emporium.Domain.Orders;
+﻿namespace Emporium.Domain.Orders;
 public class Order : Entity<OrderId>
 {
     private readonly List<OrderItem> orderItems = new();

@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Emporium.Domain.Products.Exceptions;
 using Emporium.Domain.Stocks.Exceptions;
 
 namespace Emporium.Domain.Stocks.Validators;

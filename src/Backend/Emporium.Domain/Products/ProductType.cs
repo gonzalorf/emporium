@@ -1,5 +1,3 @@
-using Emporium.Domain.SeedWork;
-
 namespace Emporium.Domain.Products;
 
 public class ProductType : Entity<ProductTypeId>

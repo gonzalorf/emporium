@@ -1,6 +1,4 @@
-﻿using Emporium.Domain.SeedWork;
-
-namespace Emporium.Domain.Tenants;
+﻿namespace Emporium.Domain.Tenants;
 public class Tenant
 {
     public TenantId Id { get; set; }

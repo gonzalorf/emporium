@@ -1,5 +1,3 @@
-using Emporium.Domain.SeedWork;
-
 namespace Emporium.Domain.PlatformUsers;
 public class PlatformUser : Entity<PlatformUserId>, IAggregateRoot
 {
