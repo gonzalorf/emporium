@@ -1,5 +1,4 @@
-﻿using Emporium.Application.Common;
-using Emporium.Application.Configuration.Queries;
+﻿using Emporium.Application.Configuration.Queries;
 using Emporium.Application.Products.Dtos;
 using Emporium.Domain.Products;
 using MapsterMapper;
@@ -16,7 +15,7 @@ internal class GetProductsQueryHandler : IQueryHandler<GetProductsQuery, Result<
         this.mapper = mapper;
     }
 
-    public async Task<Result<IEnumerable<ProductDto>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    public async ValueTask<Result<IEnumerable<ProductDto>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
         var products = await productRepository.GetByFilters(request.Name, request.Category);
 

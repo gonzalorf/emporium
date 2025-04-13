@@ -1,4 +1,4 @@
-namespace Emporium.Application.Products.Commands;
+namespace Emporium.Application.Products.Commands.AddAssignedVariant;
 
 public record AddAssignedVariantCommand(
         Guid ProductId,

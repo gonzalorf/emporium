@@ -4,7 +4,7 @@ using Emporium.Application.Providers.Commands.CreateProvider;
 using Emporium.Application.Providers.Commands.RemoveProvider;
 using Emporium.Application.Providers.Commands.UpdateProvider;
 using Emporium.Application.Providers.Queries.GetProviders;
-using MediatR;
+using Mediator;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Emporium.API.Endpoints;
