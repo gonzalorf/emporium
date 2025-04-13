@@ -10,7 +10,7 @@ internal class UpdateProductMainPropertiesCommandHandler : ICommandHandler<Updat
         this.productRepository = productRepository;
     }
 
-    public async ValueTask<Result> Handle(UpdateProductMainPropertiesCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateProductMainPropertiesCommand request, CancellationToken cancellationToken)
     {
         var product = await productRepository.GetById(new ProductId(request.ProductId));
         if (product == null)

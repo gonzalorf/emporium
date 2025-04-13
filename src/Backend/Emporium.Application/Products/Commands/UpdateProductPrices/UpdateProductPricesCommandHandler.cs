@@ -10,7 +10,7 @@ internal class UpdateProductPricesCommandHandler : ICommandHandler<UpdateProduct
         this.productRepository = productRepository;
     }
 
-    public async ValueTask<Result> Handle(UpdateProductPricesCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateProductPricesCommand request, CancellationToken cancellationToken)
     {
         var product = await productRepository.GetById(new ProductId(request.ProductId));
         if (product == null)

@@ -4,4 +4,4 @@ using Emporium.Application.Products.Dtos;
 
 namespace Emporium.Application.Products.Queries.GetProducts;
 
-public record GetProductsQuery() : IQuery<Result<IEnumerable<ProductDto>>>;
+public record GetProductsQuery(string? Name, string? Category) : IQuery<Result<IEnumerable<ProductDto>>>;

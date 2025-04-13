@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
 using Mapster;
+using Microsoft.Extensions.DependencyInjection;
+using MediatR;
 
 namespace Emporium.Application;
 public static class DependencyInjection
@@ -11,7 +12,10 @@ public static class DependencyInjection
     {
         var assembly = typeof(DependencyInjection).Assembly;
 
-        _ = services.AddMediator();
+        _ = services.AddMediatR(configuration =>
+        {
+            _ = configuration.RegisterServicesFromAssemblies(assembly);
+        });
 
         _ = services.AddValidatorsFromAssembly(assembly);
 

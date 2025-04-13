@@ -17,7 +17,7 @@ internal class GetProductQueryHandler : IQueryHandler<GetProductQuery, Result<Pr
         this.mapper = mapper;
     }
 
-public async ValueTask<Result<ProductDto>> Handle(GetProductQuery request, CancellationToken cancellationToken)
+public async Task<Result<ProductDto>> Handle(GetProductQuery request, CancellationToken cancellationToken)
 {
     var product = await productRepository.GetById(new ProductId(request.ProductId));
     if (product == null)

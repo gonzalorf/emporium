@@ -16,14 +16,9 @@ internal class GetProductsQueryHandler : IQueryHandler<GetProductsQuery, Result<
         this.mapper = mapper;
     }
 
-    public async ValueTask<Result<IEnumerable<ProductDto>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<ProductDto>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
-        var products = await productRepository.GetAll();
-
-        if (products == null || !products.Any())
-        {
-            return Result.Failure<IEnumerable<ProductDto>>(new Error("No products found."));
-        }
+        var products = await productRepository.GetByFilters(request.Name, request.Category);
 
         var productDtos = mapper.Map<IEnumerable<ProductDto>>(products);
         return Result.Success(productDtos);
