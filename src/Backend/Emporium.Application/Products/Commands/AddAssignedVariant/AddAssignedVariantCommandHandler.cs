@@ -14,7 +14,7 @@ internal class AddAssignedVariantCommandHandler : ICommandHandler<AddAssignedVar
         _variantRepository = variantRepository;
     }
 
-    public async Task<Result> Handle(AddAssignedVariantCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Result> Handle(AddAssignedVariantCommand request, CancellationToken cancellationToken)
     {
         var product = await _productRepository.GetById(new ProductId(request.ProductId));
         if (product == null)

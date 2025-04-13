@@ -1,4 +1,3 @@
-
 using Carter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -36,19 +35,13 @@ public class Program
             };
         });
 
+        _ = builder.Services.AddSwaggerGen();
+
         // Add services to the container.
         _ = builder.Services.AddAuthorization();
 
         // Endpoint Modules
         _ = builder.Services.AddCarter();
-
-        // MediatR - CQRS
-        _ = builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        //_ = builder.Services.AddOpenApi();
-
-        builder.Services.AddSwaggerGen();
 
         // Clean Architecture
         _ = builder.Services.AddApplication();
@@ -56,44 +49,20 @@ public class Program
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
-            //app.MapOpenApi();
-        }
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            _ = app.UseSwagger();
+            _ = app.UseSwaggerUI();
         }
 
-        app.UseHttpsRedirection();
+        _ = app.UseHttpsRedirection();
 
-        app.UseAuthentication();
-        app.UseAuthorization();
-
-        var summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        _ = app.UseAuthentication();
+        _ = app.UseAuthorization();
 
         // VER https://github.com/reactiveui/refit
 
-        //app.MapGet("/test", (HttpContext httpContext) =>
-        //{
-        //    var forecast = Enumerable.Range(1, 5).Select(index =>
-        //        new WeatherForecast
-        //        {
-        //            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-        //            TemperatureC = Random.Shared.Next(-20, 55),
-        //            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        //        })
-        //        .ToArray();
-        //    return forecast;
-        //})
-        //.WithName("GetWeatherForecast");
-
-        app.MapCarter();
+        _ = app.MapCarter();
 
         app.Run();
     }
