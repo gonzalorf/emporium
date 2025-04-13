@@ -12,7 +12,7 @@ internal class CreateProviderCommandHandler : ICommandHandler<CreateProviderComm
         this.providerRepository = providerRepository;
     }
 
-    public async ValueTask<Result<ProviderId>> Handle(CreateProviderCommand request, CancellationToken cancellationToken)
+    public async Task<Result<ProviderId>> Handle(CreateProviderCommand request, CancellationToken cancellationToken)
     {
         var provider = Provider.CreateProvider(
             request.Name,

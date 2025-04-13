@@ -1,7 +1,10 @@
 
+using Carter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Emporium.Application;
+using Emporium.Infrastructure;
 
 namespace Emporium.API;
 
@@ -14,7 +17,7 @@ public class Program
         var jwtSettings = builder.Configuration.GetSection("Jwt");
         var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
 
-        builder.Services.AddAuthentication(options =>
+        _ = builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -34,17 +37,34 @@ public class Program
         });
 
         // Add services to the container.
-        builder.Services.AddAuthorization();
+        _ = builder.Services.AddAuthorization();
+
+        // Endpoint Modules
+        _ = builder.Services.AddCarter();
+
+        // MediatR - CQRS
+        _ = builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        //builder.Services.AddOpenApi();
+        //_ = builder.Services.AddOpenApi();
+
+        builder.Services.AddSwaggerGen();
+
+        // Clean Architecture
+        _ = builder.Services.AddApplication();
+        _ = builder.Services.AddInfrastructure(builder.Configuration);
 
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
-            app.MapOpenApi();
+            //app.MapOpenApi();
+        }
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();
@@ -59,19 +79,21 @@ public class Program
 
         // VER https://github.com/reactiveui/refit
 
-        app.MapGet("/test", (HttpContext httpContext) =>
-        {
-            var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                {
-                    Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    TemperatureC = Random.Shared.Next(-20, 55),
-                    Summary = summaries[Random.Shared.Next(summaries.Length)]
-                })
-                .ToArray();
-            return forecast;
-        })
-        .WithName("GetWeatherForecast");
+        //app.MapGet("/test", (HttpContext httpContext) =>
+        //{
+        //    var forecast = Enumerable.Range(1, 5).Select(index =>
+        //        new WeatherForecast
+        //        {
+        //            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+        //            TemperatureC = Random.Shared.Next(-20, 55),
+        //            Summary = summaries[Random.Shared.Next(summaries.Length)]
+        //        })
+        //        .ToArray();
+        //    return forecast;
+        //})
+        //.WithName("GetWeatherForecast");
+
+        app.MapCarter();
 
         app.Run();
     }

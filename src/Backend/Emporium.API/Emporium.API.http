@@ -1,6 +1,6 @@
 @Emporium.API_HostAddress = http://localhost:5042
 
-GET {{Emporium.API_HostAddress}}/weatherforecast/
+GET {{Emporium.API_HostAddress}}/test/
 Accept: application/json
 
 ###

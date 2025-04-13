@@ -1,4 +1,4 @@
-﻿namespace Emporium.Application.Common.Services;
+﻿namespace Emporium.Application.Services;
 
 public interface IDateTimeService
 {

@@ -10,7 +10,7 @@ internal class SetUsesVariantPricingAndStockCommandHandler : ICommandHandler<Set
         this.productRepository = productRepository;
     }
     
-    public async ValueTask<Result> Handle(SetUsesVariantPricingAndStockCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(SetUsesVariantPricingAndStockCommand request, CancellationToken cancellationToken)
 {
     var product = await productRepository.GetById(new ProductId(request.ProductId));
     if (product == null)

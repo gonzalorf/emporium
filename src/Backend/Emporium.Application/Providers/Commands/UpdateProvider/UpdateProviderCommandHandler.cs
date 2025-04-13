@@ -13,7 +13,7 @@ internal class UpdateProviderCommandHandler : ICommandHandler<UpdateProviderComm
         this.providerRepository = providerRepository;
     }
 
-public async ValueTask<Result> Handle(UpdateProviderCommand request, CancellationToken cancellationToken)
+public async Task<Result> Handle(UpdateProviderCommand request, CancellationToken cancellationToken)
 {
     var provider = await providerRepository.GetById(new ProviderId(request.ProviderId));
     if (provider == null)

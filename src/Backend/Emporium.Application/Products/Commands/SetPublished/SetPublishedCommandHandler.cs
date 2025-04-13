@@ -10,7 +10,7 @@ internal class SetPublishedCommandHandler : ICommandHandler<SetPublishedCommand,
         this.productRepository = productRepository;
     }
 
-    public async ValueTask<Result> Handle(SetPublishedCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(SetPublishedCommand request, CancellationToken cancellationToken)
     {
         var product = await productRepository.GetById(new ProductId(request.ProductId));
         if (product == null)

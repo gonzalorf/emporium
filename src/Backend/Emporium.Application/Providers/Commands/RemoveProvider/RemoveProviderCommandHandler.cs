@@ -13,7 +13,7 @@ internal class RemoveProviderCommandHandler : ICommandHandler<RemoveProviderComm
         providerRepository = ProviderRepository;
     }
 
-    public async ValueTask<Result> Handle(RemoveProviderCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(RemoveProviderCommand request, CancellationToken cancellationToken)
     {
         var provider = await providerRepository.GetById(new ProviderId(request.ProviderId));
         if (provider == null)

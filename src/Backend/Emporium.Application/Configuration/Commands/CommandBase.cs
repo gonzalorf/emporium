@@ -1,4 +1,4 @@
-﻿using Mediator;
+﻿using MediatR;
 
 namespace Emporium.Application.Configuration.Commands;
 public abstract record CommandBase : ICommand, IRequest
