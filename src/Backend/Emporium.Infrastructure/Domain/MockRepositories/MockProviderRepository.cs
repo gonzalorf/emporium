@@ -1,7 +1,7 @@
 using Emporium.Domain.Providers;
 using System.Collections.Concurrent;
 
-namespace Emporium.Infrastructure.Domain;
+namespace Emporium.Infrastructure.Domain.MockRepositories;
 
 public class MockProviderRepository : IProviderRepository
 {

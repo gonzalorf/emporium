@@ -1,7 +1,7 @@
 using Emporium.Domain.Variants;
 using System.Collections.Concurrent;
 
-namespace Emporium.Infrastructure.Domain;
+namespace Emporium.Infrastructure.Domain.MockRepositories;
 
 public class MockVariantRepository : IVariantRepository
 {

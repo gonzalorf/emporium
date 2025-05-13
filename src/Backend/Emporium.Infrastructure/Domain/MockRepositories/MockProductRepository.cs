@@ -1,7 +1,7 @@
 using Emporium.Domain.Products;
 using System.Collections.Concurrent;
 
-namespace Emporium.Infrastructure.Domain;
+namespace Emporium.Infrastructure.Domain.MockRepositories;
 
 public class MockProductRepository : IProductRepository
 {
@@ -44,7 +44,7 @@ public class MockProductRepository : IProductRepository
     public Task<IEnumerable<Product>> GetByFilters(string? name, string? category)
     {
         var filteredProducts = _products.Values.Where(p =>
-            (string.IsNullOrEmpty(name) || p.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
+            string.IsNullOrEmpty(name) || p.Name.Contains(name, StringComparison.OrdinalIgnoreCase)
         );
         return Task.FromResult(filteredProducts);
     }

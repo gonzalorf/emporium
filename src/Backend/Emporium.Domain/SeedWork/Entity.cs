@@ -1,4 +1,6 @@
-﻿namespace Emporium.Domain.SeedWork;
+﻿using System.Text.Json.Serialization;
+
+namespace Emporium.Domain.SeedWork;
 
 /// <summary>
 /// Base class for entities.
@@ -17,6 +19,7 @@ public abstract class Entity<TIdType> : IEntity where TIdType : TypedIdValueBase
 
     readonly List<IDomainEvent> domainEvents = new();
 
+    [JsonIgnore] 
     public IReadOnlyCollection<IDomainEvent>? DomainEvents => domainEvents?.AsReadOnly();
 
     public void AddDomainEvent(IDomainEvent domainEvent)

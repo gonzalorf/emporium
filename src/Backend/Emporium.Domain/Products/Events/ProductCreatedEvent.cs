@@ -1,2 +1,2 @@
 ﻿namespace Emporium.Domain.Products.Events;
-public record ProductCreatedEvent(ProductId ProductId) : DomainEventBase;
+public record ProductCreatedEvent(ProductId ProductId) : DomainEventBase(ProductId.Value, nameof(ProductCreatedEvent));

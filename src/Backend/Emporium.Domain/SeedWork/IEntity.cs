@@ -1,4 +1,6 @@
-﻿namespace Emporium.Domain.SeedWork;
+﻿using System.Text.Json.Serialization;
+
+namespace Emporium.Domain.SeedWork;
 public interface IEntity
 {
     IReadOnlyCollection<IDomainEvent> DomainEvents { get; }

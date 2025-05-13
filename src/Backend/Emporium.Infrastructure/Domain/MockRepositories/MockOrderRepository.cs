@@ -1,7 +1,7 @@
 using Emporium.Domain.Orders;
 using System.Collections.Concurrent;
 
-namespace Emporium.Infrastructure.Domain;
+namespace Emporium.Infrastructure.Domain.MockRepositories;
 
 public class MockOrderRepository : IOrderRepository
 {

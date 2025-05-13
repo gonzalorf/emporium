@@ -1,4 +1,5 @@
-﻿using Emporium.Domain.Providers.Validators;
+﻿using Emporium.Domain.Providers.Events;
+using Emporium.Domain.Providers.Validators;
 
 namespace Emporium.Domain.Providers;
 
@@ -23,6 +24,7 @@ public class Provider : AuditableEntity<ProviderId>, IAggregateRoot
 
         ProviderValidator.ValidateProvider(provider);
 
+        provider.AddDomainEvent(new ProviderCreatedEvent(provider.Id));
         return provider;
     }
 
