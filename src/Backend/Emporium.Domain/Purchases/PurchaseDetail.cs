@@ -10,5 +10,5 @@ public class PurchaseDetail : Entity<PurchaseDetailId>
     public int Quantity { get; private set; }
     public decimal Price { get; private set; }
 
-    private PurchaseDetail(){}
+    private PurchaseDetail(PurchaseDetailId id) : base(id) {}
 }

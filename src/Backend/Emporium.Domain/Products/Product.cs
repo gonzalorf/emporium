@@ -25,8 +25,6 @@ public class Product : AuditableEntity<ProductId>, IAggregateRoot
     private readonly List<ProductVariant> productVariants = new();
     public IReadOnlyCollection<ProductVariant> ProductVariants => productVariants.AsReadOnly();
 
-    private Product() : base() { }
-
     private Product(ProductId id, string name, string brand, string description, ProductType productType, decimal price, decimal strikethroughPrice, bool usesVariantPricingAndStock, bool published, ProviderId? providerId, string[] tags) : base(id)
     {
         Name = name;

@@ -9,7 +9,7 @@ namespace Emporium.API;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -45,7 +45,7 @@ public class Program
 
         // Clean Architecture
         _ = builder.Services.AddApplication();
-        _ = builder.Services.AddInfrastructure(builder.Configuration);
+        _ = await builder.Services.AddInfrastructure(builder.Configuration);
 
         var app = builder.Build();
 

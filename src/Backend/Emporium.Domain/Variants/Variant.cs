@@ -6,8 +6,6 @@ public class Variant : Entity<VariantId>
     private readonly List<VariantValue> variantValues = new();
     public IReadOnlyCollection<VariantValue> VariantValues => variantValues.AsReadOnly();
 
-    private Variant() : base() { }
-
     private Variant(VariantId id, string name) : base(id)
     {
         Name = name;

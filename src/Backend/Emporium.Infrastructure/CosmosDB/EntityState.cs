@@ -1,4 +1,4 @@
-namespace Emporium.Infrastructure.Context;
+namespace Emporium.Infrastructure.CosmosDB;
 
 public enum EntityState
 {

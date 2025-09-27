@@ -25,7 +25,7 @@ internal class CreateProviderCommandHandler : ICommandHandler<CreateProviderComm
 
         await providerRepository.Add(provider);
 
-        var result = await unitOfWork.CommitAsync(cancellationToken);
+        var result = await unitOfWork.SaveChangesAsync(cancellationToken);
         //var cResult = result.FirstOrDefault(r => r is DataObject<Contact>);
         //if (cResult != null)
         //{

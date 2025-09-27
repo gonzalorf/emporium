@@ -1,5 +1,6 @@
 ﻿namespace Emporium.Infrastructure.CosmosDB;
-internal class CosmosDbSettings
+
+public class CosmosDbSettings
 {
     /// <summary>
     ///     CosmosDb Account - The Azure Cosmos DB endpoint
@@ -20,7 +21,7 @@ internal class CosmosDbSettings
     public List<ContainerInfo> Containers { get; set; }
 
 }
-internal class ContainerInfo
+public class ContainerInfo
 {
     /// <summary>
     ///     Container Name

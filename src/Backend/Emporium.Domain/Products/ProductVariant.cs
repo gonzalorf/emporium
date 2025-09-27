@@ -8,18 +8,17 @@ public class ProductVariant : Entity<ProductVariantId>
     public decimal Price { get; private set; }
     public decimal StrikethroughPrice { get; private set; }
 
-    private ProductVariant() : base() { }
-
-    private ProductVariant(List<VariantValueId> variantValueIds, decimal price, decimal strikethroughPrice)
+    private ProductVariant(ProductVariantId id, List<VariantValueId> variantValueIds, decimal price, decimal strikethroughPrice)
+        : base(id)
     {
         this.variantValueIds = variantValueIds;
         Price = price;
         StrikethroughPrice = strikethroughPrice;
     }
 
-    public static ProductVariant CreateProductVariant(List<VariantValueId> variantValueIds, decimal price, decimal strikethroughPrice)
+    public static ProductVariant CreateProductVariant(ProductVariantId id, List<VariantValueId> variantValueIds, decimal price, decimal strikethroughPrice)
     {
-        return new ProductVariant(variantValueIds, price, strikethroughPrice);
+        return new ProductVariant(id, variantValueIds, price, strikethroughPrice);
     }
 
     public void UpdatePrices(decimal price, decimal strikethroughPrice)

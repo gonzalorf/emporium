@@ -8,11 +8,8 @@ public class PlatformUser : Entity<PlatformUserId>, IAggregateRoot
     public string Password { get; private set; } = string.Empty;
     public PlatformUserRole Role { get; private set; } = PlatformUserRole.Administrator;
 
-    private PlatformUser() : base() { }
-
     private PlatformUser(PlatformUserId id, string name, string lastName, string email, string login, string password) : base(id)
     {
-        Id = id;
         Name = name;
         LastName = lastName;
         Email = email;

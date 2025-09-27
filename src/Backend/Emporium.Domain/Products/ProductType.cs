@@ -4,8 +4,6 @@ public class ProductType : Entity<ProductTypeId>
 {
     public string Name { get; private set; } = string.Empty;
 
-    private ProductType() : base() { }
-
     public ProductType(ProductTypeId id, string name) : base(id)
     {
         Name = name;

@@ -1,23 +1,16 @@
 ﻿
 namespace Emporium.Domain.SeedWork;
 
-public record DomainEventBase : IDomainEvent, IEntity
+public record DomainEventBase : IDomainEvent
 {
-    private DomainEventBase()
+    public DomainEventBase(TypedIdValueBase relatedId, string action)
     {
-        Id = Guid.NewGuid();
+        Id = new DomainEventId(Guid.NewGuid());
         OccurredOn = DateTime.UtcNow;
-    }
-
-    public DomainEventBase(Guid relatedId, string action) : this()
-    {
         RelatedId = relatedId;
         Action = action;
+        //TenantId = tenantId;
     }
-
-    public Guid Id { get; }
-
-    public Guid RelatedId { get; }
 
     public DateTime OccurredOn { get; }
 
@@ -25,11 +18,11 @@ public record DomainEventBase : IDomainEvent, IEntity
 
     public string Action { get; }
 
-    public IReadOnlyCollection<IDomainEvent> DomainEvents => new List<IDomainEvent>();
+    public TypedIdValueBase RelatedId { get; }
 
-    public bool Deleted { get; set; }
+    public DomainEventId Id { get; set; }
 
-    public void ClearDomainEvents()
-    {
-    }
+    public string? Version { get; set; }
+
+    public string EntityType { get => GetType().Name; }
 }

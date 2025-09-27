@@ -9,8 +9,6 @@ public class Order : Entity<OrderId>
     public string CustomerEmail { get; private set; } = string.Empty;
     public string CustomerTaxId { get; private set; } = string.Empty;
 
-    private Order() : base() { }
-
     private Order(OrderId id, DateTime orderDate, decimal totalAmount, string customer, string customerEmail, string customerTaxId) : base(id)
     {
         Date = orderDate;

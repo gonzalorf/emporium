@@ -8,8 +8,6 @@ public abstract class AuditableEntity<TIdType> : Entity<TIdType>, IAuditableEnti
     public DateTime? UpdatedAt { get; set; }
     public string? DeletedBy { get; set; }
     public DateTime? DeletedAt { get; set; }
-
     protected AuditableEntity(TIdType id) : base(id) { }
-    protected AuditableEntity() { }
 
 }

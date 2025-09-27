@@ -9,9 +9,9 @@ public class Provider : AuditableEntity<ProviderId>, IAggregateRoot
     public string BankAccountNumber { get; private set; } = string.Empty;
     public string BankAccountAlias { get; private set; } = string.Empty;
 
-    private Provider(){}
+    public Provider() : base(new ProviderId(Guid.NewGuid())) { }
 
-    private Provider(ProviderId id, string name, string bankAccountNumber, string bankAccountAlias) : base(id)
+    public Provider(ProviderId id, string name, string bankAccountNumber, string bankAccountAlias) : base(id)
     {
         Name = name;
         BankAccountNumber = bankAccountNumber;

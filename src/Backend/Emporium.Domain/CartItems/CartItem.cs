@@ -8,9 +8,7 @@ public class CartItem : Entity<CartItemId>
     public decimal Price { get; private set; }
     public int Quantity { get; private set; }
     public CartItemStatus Status { get; private set; }
-
-    private CartItem() : base() { }
-
+        
     private CartItem(CartItemId id, Product product, ProductVariant? variant, int quantity, decimal price, CartItemStatus status) : base(id)
     {
         Product = product;

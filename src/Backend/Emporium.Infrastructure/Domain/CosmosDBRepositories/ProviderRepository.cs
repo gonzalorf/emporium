@@ -1,32 +1,36 @@
-﻿using Emporium.Domain.Orders;
+﻿using Emporium.Application.Configuration.Services;
 using Emporium.Domain.Providers;
-using Emporium.Infrastructure.Context;
-using Emporium.Infrastructure.Domain.CosmosDBRepositories.PartitionKeyProviders;
+using Emporium.Infrastructure.CosmosDB;
+using Microsoft.Azure.Cosmos;
 
 namespace Emporium.Infrastructure.Domain.CosmosDBRepositories;
 
 internal class ProviderRepository : IProviderRepository
 {
-    private readonly IContainerContext context;
-    private readonly IProviderPartitionKeyProvider partitionKeyProvider;
+    private readonly UnitOfWork _unitOfWork;
+    private readonly string _containerName = "Provider";
 
-    public ProviderRepository(IContainerContext context, IProviderPartitionKeyProvider partitionKeyProvider)
+    public ProviderRepository(IUnitOfWork unitOfWork)
     {
-        this.context = context;
-        this.partitionKeyProvider = partitionKeyProvider;
+        _unitOfWork = (UnitOfWork)(unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork)));
     }
 
     public Task Add(Provider provider)
     {
-        var o = new DataObject<Provider>(provider.Id.Value.ToString()
-            , partitionKeyProvider.GetPartitionKey(provider)
-            , nameof(Provider)
-            , provider
-            , null
-            , -1
-            , EntityState.Created);
+        //var o = new DataObject<Provider>(provider.Id.Value.ToString()
+        //    , partitionKeyProvider.GetPartitionKey(provider)
+        //    , nameof(Provider)
+        //    , provider
+        //    , null
+        //    , -1
+        //    , EntityState.Created);
 
-        context.Add(o);
+        //context.Add(o);
+        //return Task.CompletedTask;
+
+
+        // Extrae el valor de la PK (category) y lo pasa al UoW
+        _unitOfWork.RegisterChange(provider, _containerName, EntityState.Created, new PartitionKey(provider.Id.Value.ToString()));
         return Task.CompletedTask;
     }
 

@@ -1,4 +1,4 @@
 using Emporium.Domain.Variants;
 
 namespace Emporium.Domain.Products.Events;
-public record AssignedVariantRemovedEvent(ProductId ProductId, VariantId VariantId) : DomainEventBase(ProductId.Value, nameof(AssignedVariantRemovedEvent));
+public record AssignedVariantRemovedEvent(ProductId ProductId, VariantId VariantId) : DomainEventBase(ProductId, nameof(AssignedVariantRemovedEvent));

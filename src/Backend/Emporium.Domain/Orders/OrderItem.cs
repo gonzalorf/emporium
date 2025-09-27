@@ -8,8 +8,6 @@ public class OrderItem : Entity<OrderItemId>
     public int Quantity { get; private set; }
     public decimal Price { get; private set; }
 
-    private OrderItem() : base() { }
-
     private OrderItem(OrderItemId id, Product product, ProductVariant? productVariant, int quantity, decimal price) : base(id)
     {
         Product = product;
